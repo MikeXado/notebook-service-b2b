@@ -16,11 +16,11 @@ jobs:
 
       - name: 🔨 Build Project
         run: |
-          npm install --legacy-peer-deps
+          npm install
           npm run build
 
       - name: List output files
-        run: find build/ -print
+        run: find .next/ -print
 
       - name: 📂 Sync files
         uses: wlixcc/SFTP-Deploy-Action@v1.0
@@ -28,6 +28,6 @@ jobs:
           username: 'develop'
           server: 'b2b.notebook-service.com.ua'
           ssh_private_key: ${{ secrets.FTP_KEY }}
-          local_path: './build/*'
+          local_path: './.next/*'
           remote_path: 'current/html/'
           args: '-o ConnectTimeout=5'
