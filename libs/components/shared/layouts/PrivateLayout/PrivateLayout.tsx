@@ -1,6 +1,5 @@
 import React from 'react'
 import StyledHeader from '../styled-header'
-import Link from 'next/link'
 import Image from 'next/image'
 import { Phone } from 'lucide-react'
 import { NOT_ACTIVE_PHONE } from '../../../../constants/constants'
@@ -9,6 +8,7 @@ import UserName from './UserName'
 import MobileNavbar from './MobileNavbar'
 import { User } from '../../../../utils-schema/auth.schema'
 import { useTranslations } from 'next-intl'
+import { Link } from '../../../../service/i18n/navigation'
 
 export default function PrivateLayout({
   currencyName,

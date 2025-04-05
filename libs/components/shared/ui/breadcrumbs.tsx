@@ -2,10 +2,10 @@
 
 import React from 'react'
 
-import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { Link } from '../../../service/i18n/navigation'
 
 export function Breadcrumbs() {
   const pathname = usePathname()

@@ -4,10 +4,10 @@ import {
   ORDERS_ROUTE,
   SHOPPING_CART_ROUTE
 } from '../../../../constants/constants'
-import Link from 'next/link'
 import { ShoppingBag, ShoppingCart } from 'lucide-react'
 import { useCart, useLotsCart } from '../../../../hooks/use-cart'
 import LanguageSelector from '../../ui/language-selector'
+import { Link } from '../../../../service/i18n/navigation'
 
 export default function Navigation({ numberOrders }: { numberOrders: number }) {
   const [notebooksCart] = useCart()

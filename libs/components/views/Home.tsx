@@ -1,12 +1,12 @@
 import React from 'react'
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../../constants/constants'
 import Image from 'next/image'
-import Link from 'next/link'
 import { PublicContentContainer } from '../shared/styled/PublicContentContainer'
 import { getServerSession } from 'next-auth'
 
 import { nextAuthOptions } from '../../service/auth-options'
 import { getTranslations } from 'next-intl/server'
+import { Link } from '../../service/i18n/navigation'
 
 export default async function Home() {
   const [session, t] = await Promise.all([

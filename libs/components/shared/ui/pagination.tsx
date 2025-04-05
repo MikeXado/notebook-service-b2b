@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { ArrowLeft, ArrowRight, MoreHorizontal } from 'lucide-react'
 
-import Link from 'next/link'
 import { cn } from '../../../utils/cn'
+import { Link } from '../../../service/i18n/navigation'
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav

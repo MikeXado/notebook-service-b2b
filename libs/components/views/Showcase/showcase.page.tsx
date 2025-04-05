@@ -1,5 +1,4 @@
 'use client'
-import Link from 'next/link'
 import React, { useTransition } from 'react'
 import {
   LOTS_ROUTE,
@@ -11,6 +10,7 @@ import Image from 'next/image'
 import { getAllShowcaseInExcel } from './action'
 import { toast } from '../../shared/ui/use-toast'
 import { useTranslations } from 'next-intl'
+import { Link } from '../../../service/i18n/navigation'
 
 interface SideNavLinkProps {
   to: string

@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { redirect } from 'next/navigation'
-import Link from 'next/link'
 import Image from 'next/image'
 import { RegisterDtoFormSchema } from '../../../utils-schema/auth.schema'
 import StyledHeader from '../../shared/layouts/styled-header'
@@ -16,6 +15,7 @@ import { registerUser } from './action'
 import { cn } from '../../../utils/cn'
 import { toast } from '../../shared/ui/use-toast'
 import { Loader2 } from 'lucide-react'
+import { Link } from '../../../service/i18n/navigation'
 
 export default function SignUp() {
   const t = useTranslations('auth.registration')

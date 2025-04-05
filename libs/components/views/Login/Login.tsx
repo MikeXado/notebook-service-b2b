@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { LoginDto } from '../../../utils-schema/auth.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import StyledHeader from '../../shared/layouts/styled-header'
-import Link from 'next/link'
 import Image from 'next/image'
 import { PublicContentContainer } from '../../shared/styled/PublicContentContainer'
 import { Input } from '../../shared/ui/input'
@@ -14,6 +13,7 @@ import { toast } from '../../shared/ui/use-toast'
 import { useSearchParams } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { Link } from '../../../service/i18n/navigation'
 
 export const defaultFormState = {
   email: '',

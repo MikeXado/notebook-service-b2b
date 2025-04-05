@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
-import Link from 'next/link'
 import { useTranslations } from 'next-intl'
+import { Link } from '../../../../service/i18n/navigation'
 
 export default function EmptyCartPlaceholder() {
   const t = useTranslations('cart')
