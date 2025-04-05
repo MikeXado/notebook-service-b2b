@@ -1,5 +1,3 @@
-import { FiltersEnum } from '../utils-schema/filter.schema'
-
 // app essentials
 export const NOT_ACTIVE_PHONE = '094-917-5358'
 
@@ -64,17 +62,6 @@ export const LookoutConditions: Record<string, string> = {
   classC: 'Класс C',
   unknown: 'Неизвестно'
 }
-
-export const filterKeys = [
-  'mark',
-  'proc_site',
-  'proc',
-  'ram',
-  'hdd',
-  'display',
-  'lookout',
-  'poweron'
-]
 
 export const displayOptions = [
   {

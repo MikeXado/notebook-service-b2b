@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { FilterDto, FiltersEnum } from '../../../../utils-schema/filter.schema'
 import { cn } from '../../../../utils/cn'
 import { DropdownMenuCheckboxItemProps } from '@radix-ui/react-dropdown-menu'
-import { displayOptions, filterKeys } from '../../../../constants/constants'
+import { displayOptions } from '../../../../constants/constants'
 import { MultiSelect } from '../../../shared/ui/multi-select'
 import { buttonClass } from '../../../shared/styled/action-button'
 import { Checkbox } from '../../../shared/ui/checkbox'
@@ -19,7 +19,7 @@ export default function Filters({ filters: data }: { filters: FilterDto }) {
   const t = useTranslations('showcase.header.filters')
   const [values, setValues] = useState<Record<string, string[]>>(() => {
     const initialValues: Record<string, string[]> = {}
-    filterKeys.forEach((key) => {
+    FiltersEnum.options.forEach((key) => {
       initialValues[key] = [...searchParams.getAll(key)]
     })
     return initialValues
@@ -47,8 +47,6 @@ export default function Filters({ filters: data }: { filters: FilterDto }) {
     newSearchParams.set('page', '1')
     router.replace(pathname + '?' + newSearchParams.toString())
   }
-
-  console.log(values)
 
   return (
     <div className={cn('relative p-5 shadow-lg rounded-md bg-white h-fit')}>
