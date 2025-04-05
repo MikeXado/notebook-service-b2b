@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../../constants/constants'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,9 +6,14 @@ import { PublicContentContainer } from '../shared/styled/PublicContentContainer'
 import { getServerSession } from 'next-auth'
 
 import { nextAuthOptions } from '../../service/auth-options'
+import { getTranslations } from 'next-intl/server'
 
 export default async function Home() {
-  const session = await getServerSession(nextAuthOptions)
+  const [session, t] = await Promise.all([
+    getServerSession(nextAuthOptions),
+    getTranslations('home')
+  ])
+
   return (
     <div className="h-full w-full justify-center">
       <PublicContentContainer>
@@ -19,12 +23,10 @@ export default async function Home() {
               src="/assets/icons/logo.svg"
               width={194}
               height={29}
-              alt="logo"
+              alt={t('logoAlt')}
             />
 
-            <h1 className="text-2xl font-medium">
-              Оптовый портал ноутбуков и комплектующих
-            </h1>
+            <h1 className="text-2xl font-medium">{t('title')}</h1>
 
             <div className="flex gap-x-4">
               {session?.jwt ? (
@@ -33,7 +35,7 @@ export default async function Home() {
                   className="text-center text-white rounded-lg transition-all py-2 px-5 bg-blue-500 hover:bg-blue-600 duration-300"
                   href="/showcase"
                 >
-                  Витрина
+                  {t('showcase')}
                 </Link>
               ) : (
                 <>
@@ -41,13 +43,13 @@ export default async function Home() {
                     className="text-center text-white rounded-lg transition-all py-2 px-5 bg-blue-500 hover:bg-blue-600 duration-300"
                     href={REGISTRATION_ROUTE}
                   >
-                    Регистрация
+                    {t('registration')}
                   </Link>
                   <Link
                     className="text-center py-2 transition-all duration-300 px-5 rounded-lg border border-blue-500 hover:bg-blue-500 hover:text-white"
                     href={LOGIN_ROUTE}
                   >
-                    Вход
+                    {t('login')}
                   </Link>{' '}
                 </>
               )}

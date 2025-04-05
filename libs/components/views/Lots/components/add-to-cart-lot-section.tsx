@@ -6,6 +6,7 @@ import { useLotsCart } from '../../../../hooks/use-cart'
 import { LotCart } from '../../../../utils-schema/lots.schema'
 import { toast } from '../../../shared/ui/use-toast'
 import { ifAble, USER_ACTION } from '../../../../permissions/permissions'
+import { useTranslations } from 'next-intl'
 
 export default function AddToCartLotSection({
   lot_name,
@@ -17,6 +18,7 @@ export default function AddToCartLotSection({
   userActive?: number
 }) {
   const [, setLotsCart] = useLotsCart()
+  const t = useTranslations('lots.add_to_cart')
 
   const isUserHasPermission = ifAble({
     toDo: [USER_ACTION.DO_ORDER],
@@ -34,7 +36,7 @@ export default function AddToCartLotSection({
 
       if (isProductAlreadyExist) {
         toast({
-          title: 'Лот уже есть в корзине',
+          title: t('already_in_cart'),
           variant: 'destructive'
         })
         return prevState
@@ -47,7 +49,7 @@ export default function AddToCartLotSection({
       newCart.push(newProduct)
 
       toast({
-        title: 'Лот добавлен в корзину'
+        title: t('success')
       })
       return newCart
     })

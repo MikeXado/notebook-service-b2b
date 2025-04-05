@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { redirect } from 'next/navigation'
@@ -17,6 +18,7 @@ import { toast } from '../../shared/ui/use-toast'
 import { Loader2 } from 'lucide-react'
 
 export default function SignUp() {
+  const t = useTranslations('auth.registration')
   const [isLoading, startTransition] = useTransition()
   const [captcha, setCapcha] = useState('')
   const {
@@ -62,7 +64,7 @@ export default function SignUp() {
           <Link href="/">
             <Image
               src={'/assets/icons/logo.svg'}
-              alt="logo"
+              alt={t('logoAlt')}
               width={194}
               height={29}
             />
@@ -75,7 +77,7 @@ export default function SignUp() {
             <div className="w-full flex items-center">
               <div className="w-full h-full flex flex-col gap-10">
                 <div className="mt-auto flex flex-col gap-2">
-                  <h1 className="text-2xl font-medium">Регистрация</h1>
+                  <h1 className="text-2xl font-medium">{t('registration')}</h1>
 
                   <form
                     onSubmit={handleSubmit(onsubmit)}
@@ -84,22 +86,22 @@ export default function SignUp() {
                     <div className="flex flex-col gap-5 pt-10">
                       <div className="flex items-center gap-2 flex-col sm:flex-row w-full">
                         <div className="flex flex-col items-center w-full">
-                          <label className="w-full">Название фирмы</label>
+                          <label className="w-full">{t('companyName')}</label>
                           <Input
                             type="text"
                             className={cn(
                               'h-9 border-[#EAEEF1] focus-visible:outline-none focus:border-primary hover:border-primary',
                               errors.data?.cname ? 'border-red-500' : ''
                             )}
-                            placeholder="Введите название фирмы"
+                            placeholder={t('companyName')}
                             {...register('data.cname', { required: true })}
                           />
                         </div>
                         <div className="flex flex-col items-center w-full">
-                          <label className="w-full">Имя и фамилия</label>
+                          <label className="w-full">{t('fullName')}</label>
                           <Input
                             type="text"
-                            placeholder="Введите ваше имя"
+                            placeholder={t('fullName')}
                             {...register('data.fio', { required: true })}
                             className={cn(
                               'h-9 border-[#EAEEF1] focus-visible:outline-none focus:border-primary hover:border-primary',
@@ -111,10 +113,10 @@ export default function SignUp() {
 
                       <div className="flex items-center gap-2 flex-col sm:flex-row">
                         <div className="flex flex-col items-center w-full">
-                          <label className="w-full">Эл. почта (login)</label>
+                          <label className="w-full">{t('email')}</label>
                           <Input
                             type="email"
-                            placeholder="Введите эл. почту"
+                            placeholder={t('email')}
                             {...register('data.email', { required: true })}
                             className={cn(
                               'h-9 border-[#EAEEF1] focus-visible:outline-none focus:border-primary hover:border-primary',
@@ -124,10 +126,10 @@ export default function SignUp() {
                         </div>
 
                         <div className="flex flex-col w-full">
-                          <label className="w-full">Пароль</label>
+                          <label className="w-full">{t('password')}</label>
                           <Input
                             type="password"
-                            placeholder="Введите пароль"
+                            placeholder={t('password')}
                             {...register('data.password', { required: true })}
                             className={cn(
                               'h-9 border-[#EAEEF1] focus-visible:outline-none focus:border-primary hover:border-primary',
@@ -139,9 +141,9 @@ export default function SignUp() {
 
                       <div className="flex items-center gap-2 flex-col sm:flex-row">
                         <div className="flex flex-col w-full">
-                          <label className="w-full">Телефон</label>
+                          <label className="w-full">{t('phone')}</label>
                           <Input
-                            placeholder="Введите ваш номер телефона"
+                            placeholder={t('phone')}
                             {...register('data.phone', { required: true })}
                             className={cn(
                               'h-9 border-[#EAEEF1] focus-visible:outline-none focus:border-primary hover:border-primary',
@@ -150,9 +152,9 @@ export default function SignUp() {
                           />
                         </div>
                         <div className="flex flex-col w-full">
-                          <label className="w-full">Telegram</label>
+                          <label className="w-full">{t('telegram')}</label>
                           <Input
-                            placeholder="Введите ваш логин telegram"
+                            placeholder={t('telegram')}
                             {...register('data.telegram', { required: true })}
                             className={cn(
                               'h-9 border-[#EAEEF1] focus-visible:outline-none focus:border-primary hover:border-primary',
@@ -173,7 +175,7 @@ export default function SignUp() {
                         rules={{ required: true }}
                         render={({ field }) => (
                           <Input
-                            placeholder="Введите символы"
+                            placeholder={t('enterSymbols')}
                             onChange={(e) =>
                               field.onChange(e.target.value === captcha)
                             }
@@ -200,9 +202,9 @@ export default function SignUp() {
                         />
 
                         <p className="text-[#818895] text-sm">
-                          Я согласен с условиями{' '}
+                          {t('agreeTerms')}{' '}
                           <Link className="text-base text-[#112878]" href="/">
-                            политики конфиденциальности
+                            {t('privacyPolicy')}
                           </Link>
                         </p>
                       </div>
@@ -215,7 +217,7 @@ export default function SignUp() {
                         {isLoading ? (
                           <Loader2 className="animate-spin" />
                         ) : (
-                          'Зарегистрироваться'
+                          t('register')
                         )}
                       </button>
                     </div>
@@ -224,9 +226,9 @@ export default function SignUp() {
 
                 <div className="mt-auto w-full text-center flex justify-center">
                   <p className="text-[#818895] text-sm">
-                    У вас уже есть аккаунт?{' '}
+                    {t('haveAccount')}{' '}
                     <Link className="text-base text-[#112878]" href="/sign-in">
-                      Войдите
+                      {t('signIn')}
                     </Link>
                   </p>
                 </div>

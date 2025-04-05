@@ -3,6 +3,7 @@ import { NotebookImage } from '../../Showcase/components/notebook-image'
 import RemoveFromCartSections from './remove-from-cart-section'
 import { useCart } from '../../../../hooks/use-cart'
 import { getDiscount } from '../../Showcase/utils/get-discount'
+import { useTranslations } from 'next-intl'
 
 export function NotebooksCart({
   rate,
@@ -14,6 +15,7 @@ export function NotebooksCart({
   userDiscountPercent?: number
 }) {
   const [notebookCart, setCart] = useCart()
+  const t = useTranslations('cart.notebook_cards')
 
   function handleRemoveFromCart(serial_num: string) {
     setCart((prevCart) => {
@@ -31,7 +33,7 @@ export function NotebooksCart({
 
   return (
     <div className="bg-white rounded-lg shadow p-3 h-fit flex flex-col gap-2">
-      <p className="font-medium">Ноутбуки</p>
+      <p className="font-medium">{t('title')}</p>
 
       {notebookCart.map((cart) => {
         return (
@@ -58,7 +60,7 @@ export function NotebooksCart({
 
             <div className="col-span-4 flex flex-col gap-2 sm:gap-0 sm:flex-row items-center justify-between">
               <div className="flex items-center gap-2">
-                <p>Цена:</p>
+                <p>{t('price')}</p>
                 <p className="font-medium flex items-center gap-1">
                   <del className="text-secondary-foreground text-sm">
                     {cart.item_price} {currencyName}

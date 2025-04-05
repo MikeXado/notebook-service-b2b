@@ -10,14 +10,14 @@ import { Breadcrumbs } from '../../shared/ui/breadcrumbs'
 import { ErrorNotActiveUser } from '../../shared/errorComponents/error-non-active-user'
 import { ManagerCard } from './components/manager-card'
 import EmptyResult from '../../shared/errorComponents/empty-result'
-
-const PAGE_TITLE = 'Мои заказы'
+import { getTranslations } from 'next-intl/server'
 
 export async function OrdersPage() {
-  const [user, ordersResponse, managerInfo] = await Promise.all([
+  const [user, ordersResponse, managerInfo, t] = await Promise.all([
     getUserOrThrow(),
     fetchWrapper<unknown, OrderDto>({ url: API_ORDERS }),
-    fetchWrapper<unknown, ManagerDto>({ url: API_MANAGER })
+    fetchWrapper<unknown, ManagerDto>({ url: API_MANAGER }),
+    getTranslations('orders')
   ])
 
   const isUserHasPermission = ifAble({
@@ -28,7 +28,7 @@ export async function OrdersPage() {
   return (
     <div className="max-w-[1170px] px-2 w-full mx-auto flex flex-col gap-5 py-5">
       <Breadcrumbs />
-      <h1 className="text-2xl font-medium">{PAGE_TITLE}</h1>
+      <h1 className="text-2xl font-medium">{t('title')}</h1>
       {isUserHasPermission ? (
         <div className="flex flex-col-reverse w-full md:grid md:grid-cols-4 md:items-start gap-5">
           {managerInfo.result && (

@@ -7,10 +7,12 @@ import {
   PopoverContent,
   PopoverTrigger
 } from '../../../shared/ui/popover'
+import { useTranslations } from 'next-intl'
 
 export default function NotebookLookout({ lookout }: { lookout: string }) {
-  const { title, style } =
+  const { key, style } =
     iconConditionMap[lookout] || iconConditionMap[LookoutConditions.unknown]
+  const t = useTranslations('showcase.items.lookout')
   return (
     <Popover>
       <PopoverTrigger>
@@ -24,7 +26,7 @@ export default function NotebookLookout({ lookout }: { lookout: string }) {
         </div>
       </PopoverTrigger>
       <PopoverContent className={style}>
-        <p className="text-white">{title}</p>
+        <p className="text-white">{t(`${key}`)}</p>
       </PopoverContent>
     </Popover>
   )
@@ -32,23 +34,20 @@ export default function NotebookLookout({ lookout }: { lookout: string }) {
 
 const iconConditionMap = {
   [LookoutConditions.classA]: {
-    title: 'Экран в отличном состоянии, без видимых дефектов.',
+    key: 'classA',
     style: 'bg-[#5FD071]'
   },
   [LookoutConditions.classB]: {
-    title:
-      'Экран в хорошем состоянии, но с небольшими косметическими дефектами, возможны мелкие потертости или минимальные засветы, заметные только при внимательном рассмотрении.',
+    key: 'classB',
     style: 'bg-[#BCDB57]'
   },
   [LookoutConditions.classC]: {
-    title:
-      'Экран с видимыми дефектами, возможны пятна, полосы, трещины, но они не должны критически влиять на комфорт использования.',
+    key: 'classC',
     style: 'bg-[#AFAE72]'
   },
 
   [LookoutConditions.unknown]: {
-    title:
-      'Состояние экрана не определено или не соответствует указанным категориям.',
+    key: 'unknown',
     style: 'bg-[#D9D9D9]'
   }
 }

@@ -1,8 +1,10 @@
 'use client'
 import React from 'react'
 import { signOut } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
 
 export default function UserName({ username }: { username: string }) {
+  const t = useTranslations('layout')
   return (
     <>
       <div className="flex">
@@ -15,7 +17,7 @@ export default function UserName({ username }: { username: string }) {
               signOut({ callbackUrl: '/sign-in' })
             }}
           >
-            Выйти
+            {t('logout')}
           </a>
         </div>
       </div>

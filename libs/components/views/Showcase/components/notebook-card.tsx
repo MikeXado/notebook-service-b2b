@@ -16,6 +16,7 @@ import {
 import NotebookLookout from './notebook-lookout'
 import { NotebookPowerOn } from './notebook-poweron'
 import { renderSpecs } from '../../../shared/render-specs'
+import { useTranslations } from 'next-intl'
 
 export default function NotebookCard({
   notebook,
@@ -31,15 +32,18 @@ export default function NotebookCard({
     isUserActive: !!userActive
   })
 
+  const t = useTranslations('showcase.items')
+
   return (
     <div className="bg-white rounded-lg shadow w-full h-full relative flex flex-col justify-between">
       {notebook.is_new === 1 && (
         <div className="absolute rounded-t-lg top-0 z-20 w-full left-1/2 -translate-x-1/2 text-white bg-[#ffac30] text-center px-1 py-2">
-          Новинка
+          {t('new')}
         </div>
       )}
       <NotebookSlider
-        imageClassName="w-full h-full aspect-square border-none p-0"
+        sliderTriggerClassName="border-none"
+        imageClassName="w-full h-full aspect-square p-0"
         serial_num={notebook.serial_num}
         mark_name={notebook.mark_name}
         item_name={notebook.item_name}
@@ -47,8 +51,13 @@ export default function NotebookCard({
       />
       <div>
         <div className="flex items-center gap-2 justify-between px-3">
-          <p className="text-secondary-foreground text-sm">
-            {notebook.serial_num}
+          <p className="text-secondary-foreground text-sm flex items-center gap-2">
+            <span>{notebook.serial_num}</span>
+            <span className="bg-gray-200 px-2 rounded-sm ">
+              {t('store', {
+                store_code: notebook.store_code
+              })}{' '}
+            </span>
           </p>
 
           {notebook.note && <NotebookNote note={notebook.note} />}
@@ -69,7 +78,7 @@ export default function NotebookCard({
                 notebook.poweron ? (
                   <NotebookPowerOn powerOn={notebook.poweron} />
                 ) : (
-                  'Вн. вид'
+                  t('poweron.title')
                 )
               }
             >
@@ -82,7 +91,7 @@ export default function NotebookCard({
                 notebook.display_cond ? (
                   <DisplayCondition condition={notebook.display_cond} />
                 ) : (
-                  'Экран'
+                  t('screen.title')
                 )
               }
             >
@@ -103,10 +112,7 @@ export default function NotebookCard({
                 </del>
               </div>
             ) : (
-              <p
-                className="blur-sm"
-                title="Менеджер должен подтвердить ваши данные"
-              >
+              <p className="blur-sm" title={t('not_active')}>
                 Not active
               </p>
             )}

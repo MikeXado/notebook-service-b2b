@@ -20,6 +20,7 @@ export const NotebookSchema = z.object({
   item_price: z.number(),
   is_new: z.number(),
   ainvoicedtl_id: z.number(),
+  store_code: z.string(),
   num: z.number(),
   has_icon: z.number(),
   store_time: z.string()

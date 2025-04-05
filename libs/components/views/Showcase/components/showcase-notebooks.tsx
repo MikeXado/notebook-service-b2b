@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '../../../shared/ui/select'
+import { useTranslations } from 'next-intl'
 
 export default function ShowcaseNotebooks({
   notebooks,
@@ -32,6 +33,7 @@ export default function ShowcaseNotebooks({
 }) {
   const [showCards, setShowCards] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const t = useTranslations('showcase')
 
   function handleExportExcel() {
     startTransition(async () => {
@@ -45,7 +47,7 @@ export default function ShowcaseNotebooks({
         document.body.removeChild(link)
       } catch {
         toast({
-          title: 'Ошибка экспорта в Excel',
+          title: t('export.error'),
           variant: 'destructive'
         })
       }
@@ -67,7 +69,7 @@ export default function ShowcaseNotebooks({
             height={18}
             alt="excel"
           />
-          <span>Выгрузка Excel</span>
+          <span>{t('export.title')}</span>
         </button>
         <div className="items-center gap-2 hidden lg:flex">
           <SelectItemsSize />
@@ -137,6 +139,7 @@ function SelectItemsSize() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const itemsPerPage = searchParams.get('itemsPerPage') || '20'
+  const t = useTranslations('showcase.pagination')
 
   function handleSelectItemsChange(value: string) {
     const newSearchParams = new URLSearchParams(searchParams.toString())
@@ -152,7 +155,7 @@ function SelectItemsSize() {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Карточек на странице</SelectLabel>
+          <SelectLabel>{t('title')}</SelectLabel>
           <SelectItem value="20">20</SelectItem>
           <SelectItem value="40">40</SelectItem>
           <SelectItem value="60">60</SelectItem>

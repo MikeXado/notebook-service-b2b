@@ -1,11 +1,13 @@
 import React from 'react'
 import { ManagerDto } from '../../../../utils-schema/manager.schema'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export function ManagerCard({ managerInfo }: { managerInfo: ManagerDto }) {
+  const t = useTranslations('orders')
   return (
     <div className="md:col-span-1 bg-white p-3 rounded-lg shadow flex flex-col gap-5 ">
-      <p className="text-center text-sm">Ваш менеджер</p>
+      <p className="text-center text-sm">{t('manager')}</p>
       <p className="text-sm text-center font-medium">
         {managerInfo?.mngr_name}
       </p>

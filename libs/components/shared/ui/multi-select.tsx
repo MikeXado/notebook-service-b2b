@@ -19,13 +19,15 @@ type MultiSelectProps<T extends Record<string, string[]>> = {
   options: OptionType[]
   selectedKey: string
   setValues: React.Dispatch<React.SetStateAction<T>>
+  placeholder?: string
 }
 
 export function MultiSelect<T extends Record<string, string[]>>({
   values,
   options,
   selectedKey,
-  setValues
+  setValues,
+  placeholder
 }: MultiSelectProps<T>) {
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [open, setOpen] = React.useState(false)
@@ -111,7 +113,7 @@ export function MultiSelect<T extends Record<string, string[]>>({
             onValueChange={setInputValue}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
-            placeholder="Выберите фильтр"
+            placeholder={placeholder}
             className="ml-2 flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
           />
         </div>

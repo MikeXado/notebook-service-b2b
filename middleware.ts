@@ -1,23 +1,45 @@
-import { withAuth } from 'next-auth/middleware'
-import { NextResponse } from 'next/server'
-export default withAuth(
-  async function middleware(req) {
-    const token = req.nextauth?.token
-    const baseUrl = req.nextUrl.origin
-    if (!token || token.expired) {
-      return NextResponse.redirect(`${baseUrl}/sign-in`)
-    }
-    return NextResponse.next()
+import { NextRequestWithAuth, withAuth } from 'next-auth/middleware'
+import createMiddleware from 'next-intl/middleware'
+import { NextFetchEvent, NextRequest } from 'next/server'
+import { routing } from './libs/service/i18n/routing'
+
+const publicPages = ['/', '/sign-in']
+
+const handleI18nRouting = createMiddleware(routing)
+
+const authMiddleware = withAuth(
+  // Note that this callback is only invoked if
+  // the `authorized` callback has returned `true`
+  // and not for pages listed in `pages`.
+  function onSuccess(req) {
+    return handleI18nRouting(req)
   },
   {
     callbacks: {
-      authorized: ({ token }) => {
-        return !!token && !token.expired
-      }
+      authorized: ({ token }) => Boolean(token && !token.expired)
+    },
+    pages: {
+      signIn: '/sign-in'
     }
   }
 )
 
+export default function middleware(req: NextRequest, event: NextFetchEvent) {
+  const publicPathnameRegex = RegExp(
+    `^(/(${routing.locales.join('|')}))?(${publicPages
+      .flatMap((p) => (p === '/' ? ['', '/'] : p))
+      .join('|')})/?$`,
+    'i'
+  )
+  const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname)
+
+  if (isPublicPage) {
+    return handleI18nRouting(req)
+  } else {
+    return authMiddleware(req as NextRequestWithAuth, event)
+  }
+}
+
 export const config = {
-  matcher: ['/showcase', '/showcase/:path*']
+  matcher: ['/((?!api|_next|.*\\..*).*)']
 }

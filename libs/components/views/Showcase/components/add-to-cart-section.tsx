@@ -7,6 +7,7 @@ import {
 } from '../../../../utils-schema/notebook.schema'
 import { useCart } from '../../../../hooks/use-cart'
 import { toast } from '../../../shared/ui/use-toast'
+import { useTranslations } from 'next-intl'
 
 export default function AddToCartSection({
   className,
@@ -16,6 +17,7 @@ export default function AddToCartSection({
   data: Notebook
 }) {
   const [cart, setCart] = useCart()
+  const t = useTranslations('showcase.add_to_cart')
 
   function handleAddToCart() {
     setCart((prevState) => {
@@ -26,7 +28,7 @@ export default function AddToCartSection({
 
       if (isProductAlreadyExist) {
         toast({
-          title: 'Товар уже есть в корзине',
+          title: t('already_in_cart'),
           variant: 'destructive'
         })
         return prevState
@@ -43,7 +45,7 @@ export default function AddToCartSection({
 
       newCart.push(newProduct)
       toast({
-        title: 'Товар добавлен в корзину'
+        title: t('success')
       })
       return newCart
     })
@@ -53,7 +55,7 @@ export default function AddToCartSection({
     setCart((prevState) => {
       const newCart = prevState.filter((c) => c.serial_num !== data.serial_num)
       toast({
-        title: 'Товар удален из корзины'
+        title: t('deleted')
       })
       return newCart
     })

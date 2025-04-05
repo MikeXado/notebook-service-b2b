@@ -13,6 +13,7 @@ import { cn } from '../../../utils/cn'
 import { toast } from '../../shared/ui/use-toast'
 import { useSearchParams } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export const defaultFormState = {
   email: '',
@@ -20,6 +21,7 @@ export const defaultFormState = {
 }
 
 export default function SignIn() {
+  const t = useTranslations('auth.sign_in')
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
   const [isLoading, startTransition] = useTransition()
@@ -35,12 +37,11 @@ export default function SignIn() {
   useEffect(() => {
     if (error) {
       toast({
-        title:
-          'Ошибка авторизации, проверьте правильность данных и попробуйте снова',
+        title: t('auth_error'),
         variant: 'destructive'
       })
     }
-  }, [error])
+  }, [error, t])
 
   function onsubmit(data: LoginDto) {
     startTransition(async () => {
@@ -51,15 +52,14 @@ export default function SignIn() {
 
       if (!response || !response?.ok) {
         toast({
-          title:
-            'Ошибка авторизации, проверьте правильность данных и попробуйте снова',
+          title: t('auth_error'),
           variant: 'destructive'
         })
       }
 
       if (!error) {
         toast({
-          title: 'Вы успешно авторизовались',
+          title: t('auth_success'),
           variant: 'default'
         })
       }
@@ -85,7 +85,7 @@ export default function SignIn() {
           <div className="w-full flex items-center">
             <div className="w-full h-full flex flex-col gap-10">
               <div className="mt-auto flex flex-col gap-2">
-                <h1 className="text-2xl font-medium">Вход</h1>
+                <h1 className="text-2xl font-medium">{t('title')}</h1>
 
                 <form
                   onSubmit={handleSubmit(onsubmit)}
@@ -93,10 +93,10 @@ export default function SignIn() {
                 >
                   <div className="form-inputs-wrapper pt-10">
                     <div className="flex flex-col items-center">
-                      <label className="w-full">Эл. почта (login)</label>
+                      <label className="w-full">{t('email')}</label>
                       <Input
                         type="email"
-                        placeholder="Введите эл. почту"
+                        placeholder={t('email_placeholder')}
                         {...register('email', { required: true })}
                         className={cn(
                           'h-9 border-[#EAEEF1] focus-visible:outline-none focus:border-[#112878] hover:border-[#112878]',
@@ -106,10 +106,10 @@ export default function SignIn() {
                     </div>
 
                     <div className="flex flex-col">
-                      <label className="w-full">Пароль</label>
+                      <label className="w-full">{t('password')}</label>
                       <Input
                         type="password"
-                        placeholder="Введите пароль"
+                        placeholder={t('password_placeholder')}
                         {...register('password', { required: true })}
                         className={cn(
                           'h-9 border-[#EAEEF1] focus-visible:outline-none focus:border-[#112878] hover:border-[#112878]',
@@ -126,7 +126,7 @@ export default function SignIn() {
                       {isLoading ? (
                         <Loader2 className="animate-spin" />
                       ) : (
-                        'Войти'
+                        t('login')
                       )}
                     </button>
                   </div>
@@ -135,9 +135,9 @@ export default function SignIn() {
 
               <div className="mt-auto w-full text-center flex justify-center">
                 <p className="text-[#818895] text-sm">
-                  У вас ещё нет аккаунта?{' '}
+                  {t('noAccount')}
                   <Link className="text-base text-[#112878]" href="/sign-up">
-                    Зарегистрируйтесь
+                    {t('register')}
                   </Link>
                 </p>
               </div>

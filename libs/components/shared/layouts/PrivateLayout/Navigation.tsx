@@ -7,6 +7,7 @@ import {
 import Link from 'next/link'
 import { ShoppingBag, ShoppingCart } from 'lucide-react'
 import { useCart, useLotsCart } from '../../../../hooks/use-cart'
+import LanguageSelector from '../../ui/language-selector'
 
 export default function Navigation({ numberOrders }: { numberOrders: number }) {
   const [notebooksCart] = useCart()
@@ -41,6 +42,9 @@ export default function Navigation({ numberOrders }: { numberOrders: number }) {
           <ShoppingCart className="text-[#818895]" />
         </div>
       </Link>
+      <LanguageSelector
+        className={`border-[#EAEEF1] bg-transparent transition-colors duration-300 px-4 border-r first-of-type:border-l h-full flex items-center justify-center hover:bg-[#EAEEF1] uppercase`}
+      />
     </div>
   )
 }

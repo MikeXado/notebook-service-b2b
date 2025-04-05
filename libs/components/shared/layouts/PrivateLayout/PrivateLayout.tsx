@@ -8,6 +8,7 @@ import Navigation from './Navigation'
 import UserName from './UserName'
 import MobileNavbar from './MobileNavbar'
 import { User } from '../../../../utils-schema/auth.schema'
+import { useTranslations } from 'next-intl'
 
 export default function PrivateLayout({
   currencyName,
@@ -66,17 +67,18 @@ export function Info({
   rate: number
   user: User
 }) {
+  const t = useTranslations('layout')
   return (
     <div className="flex gap-5 min-[1000px]:gap-8 min-[1000px]:flex-row flex-col">
       <div className="flex flex-col gap-1">
-        <p className="text-sm font-medium">Курс</p>
+        <p className="text-sm font-medium">{t('exchange')}</p>
         <p className="text-sm text-[#818895]">
           {currencyName} {rate}
         </p>
       </div>
 
       <div className="flex flex-col gap-1">
-        <p className="text-sm font-medium">Баланс</p>
+        <p className="text-sm font-medium">{t('balance')}</p>
         <p className="text-sm text-[#818895]">
           {user?.balance || 0} {currencyName}
         </p>
@@ -85,13 +87,11 @@ export function Info({
       <div className="flex flex-col min-[1000px]:gap-1 gap-5">
         {user?.active ? (
           <div className="flex flex-col min-[1000px]:flex-row min-[1000px]:items-center gap-1">
-            <p className="text-sm text-[#818895]">Ваш менеджер:</p>
+            <p className="text-sm text-[#818895]">{t('manager')}</p>
             <p className="text-sm font-medium">{user?.mngr_name}</p>
           </div>
         ) : (
-          <p className="text-sm font-medium">
-            Для оформления заказа свяжитесь с менеджером
-          </p>
+          <p className="text-sm font-medium">{t('manager_not_active')}</p>
         )}
         <div className="text-sm flex items-center gap-1 font-medium">
           <div className="bg-[#112878] w-5 h-5 rounded-full flex items-center justify-center">

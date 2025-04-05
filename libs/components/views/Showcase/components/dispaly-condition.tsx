@@ -7,13 +7,15 @@ import {
   PopoverContent,
   PopoverTrigger
 } from '../../../shared/ui/popover'
+import { useTranslations } from 'next-intl'
 
 export default function DisplayCondition({
   condition = DisplayConditions.no
 }: {
   condition: string
 }) {
-  const { icon: Icon, title, style } = iconConditionMap[condition]
+  const { icon: Icon, key, style } = iconConditionMap[condition]
+  const t = useTranslations('showcase.items.screen')
   return (
     <Popover>
       <PopoverTrigger>
@@ -21,11 +23,11 @@ export default function DisplayCondition({
           <span>
             <Icon className={cn('w-4 h-4', style)} />
           </span>
-          <p className="text-secondary-foreground">Экран</p>
+          <p className="text-secondary-foreground">{t('title')}</p>
         </div>
       </PopoverTrigger>
       <PopoverContent className={style}>
-        <p>{title}</p>
+        <p>{t(`options.${key}`)}</p>
       </PopoverContent>
     </Popover>
   )
@@ -34,34 +36,32 @@ export default function DisplayCondition({
 const iconConditionMap = {
   [DisplayConditions.Good]: {
     icon: CheckIcon,
-    title: 'Экран в отличном состоянии, без видимых дефектов.',
+    key: 'Good',
     style: 'text-green-500'
   },
   [DisplayConditions.Defective]: {
     icon: CheckIcon,
-    title:
-      'Экран в хорошем состоянии, но с небольшими косметическими дефектами, возможны мелкие потертости или минимальные засветы, заметные только при внимательном рассмотрении.',
+    key: 'Defective',
     style: 'text-primary'
   },
   [DisplayConditions.Questionable]: {
     icon: CircleHelpIcon,
-    title:
-      'Экран с видимыми дефектами, возможны пятна, полосы, трещины, но они не должны критически влиять на комфорт использования.',
+    key: 'Questionable',
     style: 'text-orange-500'
   },
   [DisplayConditions.Minimal]: {
     icon: CheckIcon,
     style: 'text-yellow-500',
-    title: 'Минимальный дефект экрана, микрозасвет или небольшая потертость.'
+    key: 'Minimal'
   },
   [DisplayConditions.Bad]: {
     icon: XIcon,
-    title: 'Экран поврежден,отсутствует',
+    key: 'Bad',
     style: 'text-red-500'
   },
   [DisplayConditions.no]: {
     icon: XIcon,
-    title: 'Не указано',
+    key: 'no',
     style: 'text-gray-400'
   }
 }

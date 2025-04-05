@@ -5,6 +5,7 @@ import {
   PopoverTrigger
 } from '../../../shared/ui/popover'
 import { cn } from '../../../../utils/cn'
+import { useTranslations } from 'next-intl'
 
 export function NotebookPowerOn({
   powerOn,
@@ -14,6 +15,7 @@ export function NotebookPowerOn({
   className?: string
 }) {
   const isPowerOn = powerOn === 'Да'
+  const t = useTranslations('showcase.items.poweron')
   return (
     <Popover>
       {' '}
@@ -26,7 +28,7 @@ export function NotebookPowerOn({
             )}
           >
             <Check className="w-4 h-4 pointer text-green-500" />
-            Рабочий
+            {t('yes.title')}
           </span>
         ) : (
           <span
@@ -36,18 +38,15 @@ export function NotebookPowerOn({
             )}
           >
             <X className="w-4 h-4 text-red-500" />
-            Не вкл-ся
+            {t('no.title')}
           </span>
         )}
       </PopoverTrigger>
       <PopoverContent>
         {isPowerOn ? (
-          <p className=" text-green-500">
-            Ноутбук включается, прошел первичную проверку, неисправностей не
-            обнаружено.{' '}
-          </p>
+          <p className=" text-green-500">{t('yes.description')}</p>
         ) : (
-          <p className=" text-red-500">Ноутбук не включается.</p>
+          <p className=" text-red-500">{t('no.description')}</p>
         )}
       </PopoverContent>
     </Popover>

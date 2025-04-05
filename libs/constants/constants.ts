@@ -65,17 +65,6 @@ export const LookoutConditions: Record<string, string> = {
   unknown: 'Неизвестно'
 }
 
-export const DisplayFiltersTypes: Record<FiltersEnum, string> = {
-  mark: 'Производитель',
-  proc: 'CPU',
-  proc_site: 'CPU',
-  ram: 'RAM',
-  hdd: 'Накопитель',
-  display: 'Экран',
-  lookout: 'Внешний вид',
-  poweron: 'Включается'
-}
-
 export const filterKeys = [
   'mark',
   'proc_site',

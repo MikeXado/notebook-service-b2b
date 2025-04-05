@@ -24,6 +24,7 @@
     "mobile-detect": "^1.4.5",
     "next": "^14.2.13",
     "next-auth": "^4.24.7",
+    "next-intl": "^4.0.2",
     "node-cache": "^5.1.2",
     "postcss": "^8.4.47",
     "radash": "^12.1.0",

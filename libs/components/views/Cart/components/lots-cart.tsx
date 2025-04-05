@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLotsCart } from '../../../../hooks/use-cart'
 import RemoveFromCartSections from './remove-from-cart-section'
+import { useTranslations } from 'use-intl'
 
 export function LotsCart({
   rate,
@@ -10,6 +11,7 @@ export function LotsCart({
   currencyName: string
 }) {
   const [lotsCart, setCart] = useLotsCart()
+  const t = useTranslations('cart.lots_cards')
 
   function handleRemoveFromCart(lot_name: string) {
     setCart((prevCart) => {
@@ -27,7 +29,7 @@ export function LotsCart({
 
   return (
     <div className="bg-white rounded-lg shadow p-3 h-fit flex flex-col gap-2">
-      <p className="font-medium">Лоты</p>
+      <p className="font-medium">{t('title')}</p>
 
       {lotsCart.map((cart, index) => {
         return (
@@ -41,7 +43,7 @@ export function LotsCart({
 
             <div className="col-span-2 flex items-center justify-between">
               <div className="flex items-center gap-2 justify-self-end">
-                Цена:{' '}
+                {t('price')}{' '}
                 <p className="font-medium flex items-center gap-2">
                   <span>
                     {cart.lot_sum} {currencyName}

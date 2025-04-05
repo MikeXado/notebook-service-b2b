@@ -10,6 +10,7 @@ import { Boxes, Laptop, MonitorCog } from 'lucide-react'
 import Image from 'next/image'
 import { getAllShowcaseInExcel } from './action'
 import { toast } from '../../shared/ui/use-toast'
+import { useTranslations } from 'next-intl'
 
 interface SideNavLinkProps {
   to: string
@@ -19,28 +20,29 @@ interface SideNavLinkProps {
 }
 
 export default function Showcase() {
+  const t = useTranslations('showcase.main')
   return (
     <div className="max-w-[1170px] px-2 w-full mx-auto flex flex-col gap-5">
-      <h1 className="text-2xl font-medium">Главная</h1>
+      <h1 className="text-2xl font-medium">{t('title')}</h1>
       <div className="flex flex-col md:flex-row items-start gap-8">
         <div className="relative w-full md:w-1/3 shadow-lg rounded-md bg-white h-fit flex flex-col">
           <div className="flex items-center justify-between p-5">
-            <p className="text-base font-medium">Каталог</p>
+            <p className="text-base font-medium">{t('aside.title')}</p>
             <ExportAllShowcaseInExcel />
           </div>
           <div className="w-full h-[1px] bg-gray-300"></div>
           <div>
             <SideNavLink to={SHOWCASE_ROUTE} isActive={false}>
               <Laptop className="text-[#112878] w-8 h-8" />
-              Готовые
+              {t('nav.ready.title')}
             </SideNavLink>
             <SideNavLink to={SHOWCASE_UNFINISHED_ROUTE} isActive={false}>
               <MonitorCog className="text-[#112878] w-8 h-8" />
-              Не готовые
+              {t('nav.not_ready.title')}
             </SideNavLink>
             <SideNavLink to={LOTS_ROUTE} isActive={false}>
               <Boxes className="text-[#112878] w-8 h-8" />
-              Лоты ноутбуков
+              {t('aside.lots_title')}
             </SideNavLink>
           </div>
         </div>
@@ -51,25 +53,26 @@ export default function Showcase() {
 }
 
 function Banner() {
+  const t = useTranslations('showcase.main.nav')
   return (
     <div className="w-full md:w-2/3 relative shadow-lg rounded-md bg-white h-fit flex flex-col">
       <ShowcaseNavigationSectionRow
         imagePath={'showcase.avif'}
-        title="Готовые"
+        title={t('ready.title')}
         navigateTo={SHOWCASE_ROUTE}
-        text="Полностью готовые к перепродаже ноутбуки. Они протестированы, укомплектованы, установлено ПО. На них предоставляется 1 неделя на проверку. В комплекте идут зарядные устройства."
+        text={t('ready.description')}
       />
       <ShowcaseNavigationSectionRow
         imagePath={'unfinished.avif'}
-        title="Не готовые"
+        title={t('not_ready.title')}
         navigateTo={SHOWCASE_UNFINISHED_ROUTE}
-        text="Рабочие и не рабочие ноутбуки с дефектами или отсутсвующими частями. Они проверены только на включение. В ремонте не были, продаются как есть, без гарантий и блоков питания"
+        text={t('not_ready.description')}
       />
       <ShowcaseNavigationSectionRow
         imagePath={'lots.avif'}
-        title="Лоты"
+        title={t('lots.title')}
         navigateTo={LOTS_ROUTE}
-        text="В лотах представлены ноутбуки в количестве по акционной цене. Лоты могут включать как рабочие, так и не рабочие ноутбуки."
+        text={t('lots.description')}
       />
     </div>
   )
@@ -86,6 +89,7 @@ function ShowcaseNavigationSectionRow({
   navigateTo: string
   imagePath: string
 }) {
+  const t = useTranslations('showcase.main')
   return (
     <div className="flex flex-col sm:flex-row gap-5 p-5 border-b border-primary-foreground last-of-type:border-none">
       <div className=" flex-shrink-0 flex flex-col gap-3">
@@ -105,7 +109,7 @@ function ShowcaseNavigationSectionRow({
           href={navigateTo}
           className="hover:text-primary hover:underline underline-offset-2"
         >
-          Перейти в раздел
+          {t('go_to')}
         </Link>
       </div>
     </div>
@@ -137,6 +141,7 @@ export function SideNavLink({
 
 function ExportAllShowcaseInExcel() {
   const [isPending, startTransition] = useTransition()
+  const t = useTranslations('showcase.export')
 
   function handleExportExcel() {
     startTransition(async () => {
@@ -150,7 +155,7 @@ function ExportAllShowcaseInExcel() {
         document.body.removeChild(link)
       } catch {
         toast({
-          title: 'Ошибка экспорта в Excel',
+          title: t('error'),
           variant: 'destructive'
         })
       }
@@ -170,7 +175,7 @@ function ExportAllShowcaseInExcel() {
         height={18}
         alt="excel"
       />
-      <span>Выгрузка Excel</span>
+      <span>{t('title')}</span>
     </button>
   )
 }

@@ -1,9 +1,12 @@
 import React from 'react'
-import PrivateLayout from '../../libs/components/shared/layouts/PrivateLayout/PrivateLayout'
-import { API_GET_EXRATE, API_ORDERS } from '../../libs/constants/constants'
-import { ExchangeRateDto } from '../../libs/utils-schema/exrate.schema'
-import { OrderDto } from '../../libs/utils-schema/order.schema'
-import { fetchWrapper, getUserOrThrow } from '../../libs/service/fetch-wrapper'
+import PrivateLayout from '../../../libs/components/shared/layouts/PrivateLayout/PrivateLayout'
+import { API_GET_EXRATE, API_ORDERS } from '../../../libs/constants/constants'
+import { ExchangeRateDto } from '../../../libs/utils-schema/exrate.schema'
+import { OrderDto } from '../../../libs/utils-schema/order.schema'
+import {
+  fetchWrapper,
+  getUserOrThrow
+} from '../../../libs/service/fetch-wrapper'
 
 export default async function Layout({
   children

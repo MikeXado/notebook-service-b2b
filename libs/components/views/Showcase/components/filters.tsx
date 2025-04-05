@@ -3,15 +3,12 @@ import React, { useState } from 'react'
 import { FilterDto, FiltersEnum } from '../../../../utils-schema/filter.schema'
 import { cn } from '../../../../utils/cn'
 import { DropdownMenuCheckboxItemProps } from '@radix-ui/react-dropdown-menu'
-import {
-  DisplayFiltersTypes,
-  displayOptions,
-  filterKeys
-} from '../../../../constants/constants'
+import { displayOptions, filterKeys } from '../../../../constants/constants'
 import { MultiSelect } from '../../../shared/ui/multi-select'
 import { buttonClass } from '../../../shared/styled/action-button'
 import { Checkbox } from '../../../shared/ui/checkbox'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 type Checked = DropdownMenuCheckboxItemProps['checked']
 
@@ -19,6 +16,7 @@ export default function Filters({ filters: data }: { filters: FilterDto }) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const t = useTranslations('showcase.header.filters')
   const [values, setValues] = useState<Record<string, string[]>>(() => {
     const initialValues: Record<string, string[]> = {}
     filterKeys.forEach((key) => {
@@ -66,13 +64,14 @@ export default function Filters({ filters: data }: { filters: FilterDto }) {
             return (
               <div key={filterKey}>
                 <p className="text-secondary-foreground text-sm">
-                  {DisplayFiltersTypes[filterKey]}
+                  {t(`options.${filterKey}`)}
                 </p>
                 <MultiSelect<Record<string, string[]>>
                   selectedKey={key}
                   options={displayOptions}
                   setValues={setValues}
                   values={values}
+                  placeholder={t('placeholder')}
                 />
               </div>
             )
@@ -81,13 +80,14 @@ export default function Filters({ filters: data }: { filters: FilterDto }) {
           return (
             <div key={filterKey}>
               <p className="text-secondary-foreground text-sm">
-                {DisplayFiltersTypes[filterKey]}
+                {t(`options.${filterKey}`)}
               </p>
               <MultiSelect<Record<string, string[]>>
                 selectedKey={filterKey}
                 options={data.filters[filterKey] || []}
                 setValues={setValues}
                 values={values}
+                placeholder={t('placeholder')}
               />
             </div>
           )
@@ -100,7 +100,7 @@ export default function Filters({ filters: data }: { filters: FilterDto }) {
               onCheckedChange={setShowNewItems}
             />
             <label htmlFor="new" className="text-sm text-secondary-foreground">
-              Показать новинки
+              {t('show_new')}{' '}
             </label>
           </div>
           <button
@@ -111,7 +111,7 @@ export default function Filters({ filters: data }: { filters: FilterDto }) {
             }}
             className={cn(buttonClass(false), 'h-10 w-full')}
           >
-            Применить
+            {t('submit')}{' '}
           </button>
         </div>
       </div>

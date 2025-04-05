@@ -6,6 +6,7 @@ import { Breadcrumbs } from '../../shared/ui/breadcrumbs'
 import EmptyCartPlaceholder from './components/empty-cart-placeholder'
 import { MainCart } from './components/main-cart'
 import { ErrorNotActiveUser } from '../../shared/errorComponents/error-non-active-user'
+import { useTranslations } from 'next-intl'
 
 export default function CartPage({
   rate,
@@ -24,13 +25,13 @@ export default function CartPage({
     toDo: [USER_ACTION.DO_ORDER],
     isUserActive: !!userActive
   })
-  console.log(cart)
+  const t = useTranslations('cart')
   const areCartsEmpty = cart.length === 0
   const areLotsCartEmpty = lotsCart.length === 0
   return (
     <div className="max-w-[1170px] px-2 w-full mx-auto flex flex-col gap-5 py-5">
       <Breadcrumbs />
-      <h1 className="text-2xl font-medium">Корзина</h1>
+      <h1 className="text-2xl font-medium">{t('title')}</h1>
 
       {isUserHasPermission ? (
         areCartsEmpty && areLotsCartEmpty ? (

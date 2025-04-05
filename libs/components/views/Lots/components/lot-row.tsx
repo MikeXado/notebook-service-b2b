@@ -5,8 +5,10 @@ import { NotebookPowerOn } from '../../Showcase/components/notebook-poweron'
 import { renderSpecs } from '../../../shared/render-specs'
 import DisplayCondition from '../../Showcase/components/dispaly-condition'
 import { NotebookNote } from '../../Showcase/components/notebook-card'
+import { useTranslations } from 'next-intl'
 
 export default function LotRow({ lots }: { lots: Lot[] }) {
+  const t = useTranslations('lots')
   return (
     <ul className="flex flex-col">
       {lots.map((lot) => (
@@ -19,7 +21,7 @@ export default function LotRow({ lots }: { lots: Lot[] }) {
             {lot.display_cond ? (
               <DisplayCondition condition={lot.display_cond} />
             ) : (
-              <span>Экран</span>
+              <span>{t('display')}</span>
             )}
             <span>{lot.display || <Minus />}</span>
           </p>
@@ -33,7 +35,11 @@ export default function LotRow({ lots }: { lots: Lot[] }) {
             {renderSpecs(lot.proc)} {renderSpecs(lot.ram)}{' '}
             {renderSpecs(lot.hdd)}
             {renderSpecs(lot.video || lot.integ_video)}
-            {renderBattery(lot.battery)}
+            {lot.battery === 'Нет'
+              ? t('battery.no')
+              : lot.battery === 'Есть'
+                ? t('battery.yes')
+                : renderSpecs(lot.battery)}
           </p>
           {lot.note && (
             <div className="place-self-end">
@@ -44,12 +50,4 @@ export default function LotRow({ lots }: { lots: Lot[] }) {
       ))}
     </ul>
   )
-}
-
-function renderBattery(battery?: string) {
-  return battery === 'Нет'
-    ? 'АКБ Отсутствует'
-    : battery === 'Есть'
-      ? 'АКБ Присутствует'
-      : renderSpecs(battery)
 }

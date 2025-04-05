@@ -16,28 +16,14 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { FilterDto } from '../../../../utils-schema/filter.schema'
 import Filters from './filters'
 import { debounce } from 'radash'
+import { useTranslations } from 'next-intl'
 
 const SORT_OPTIONS = [
-  {
-    value: 'default',
-    label: 'По умолчанию'
-  },
-  {
-    value: 'price_asc',
-    label: 'Цена по возрастанию'
-  },
-  {
-    value: 'price_desc',
-    label: 'Цена по убыванию'
-  },
-  {
-    value: 'store_time_desc',
-    label: 'От новых к старым'
-  },
-  {
-    value: 'store_time_asc',
-    label: 'От старых к новым'
-  }
+  'default',
+  'price_asc',
+  'price_desc',
+  'store_time_desc',
+  'store_time_asc'
 ]
 
 export default function PageTitleSection({
@@ -55,6 +41,7 @@ export default function PageTitleSection({
   const [isFiltersOpen, setIsFiltersOpen] = useState(false)
   const [serialNumber, setSerialNumber] = useState(searchedSerialNumber || '')
   const [name, setName] = useState(searchedNotebookName || '')
+  const t = useTranslations('showcase.header')
 
   const debouncedSerialNumberChange = debounce(
     { delay: 300 },
@@ -110,11 +97,9 @@ export default function PageTitleSection({
     <>
       <div className="flex items-center flex-col gap-5 justify-start lg:justify-between lg:flex-row">
         <div className="flex flex-col gap-2 w-full">
-          <h1 className="text-2xl font-medium">
-            {renderTextByCategory[category].title}
-          </h1>
+          <h1 className="text-2xl font-medium">{t(`${category}.title`)}</h1>
           <p className="text-secondary-foreground text-sm">
-            {renderTextByCategory[category].subtitle}
+            {t(`${category}.description`)}
           </p>
         </div>
 
@@ -122,7 +107,7 @@ export default function PageTitleSection({
           <Input
             value={name}
             onChange={handleNameChange}
-            placeholder="Введите название"
+            placeholder={t('form.title_search')}
             className={cn(
               'h-12 border-[#EAEEF1] bg-white focus-visible:outline-none focus-visible:ring-0 focus:border-primary hover:border-primary transition-all duration-300'
             )}
@@ -130,7 +115,7 @@ export default function PageTitleSection({
           <Input
             value={serialNumber}
             onChange={handleSerialNumberChange}
-            placeholder="Введите серийный номер"
+            placeholder={t('form.serial_search')}
             className={cn(
               'h-12 border-[#EAEEF1] bg-white focus-visible:outline-none focus-visible:ring-0 focus:border-primary hover:border-primary transition-all duration-300'
             )}
@@ -162,6 +147,7 @@ function SortSelect() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const searchedSortOption = searchParams.get('sort')
+  const t = useTranslations('showcase.header.form.sort')
 
   function handleSortPriceChange(value: string) {
     const newSearchParams = new URLSearchParams(searchParams.toString())
@@ -177,34 +163,20 @@ function SortSelect() {
       <SelectTrigger
         id="show-sort-trigger"
         aria-label="show sort options"
-        className="w-full bg-white h-12 text-primary hover:border-primary transition-all duration-300"
+        className="bg-white h-12 text-primary hover:border-primary transition-all duration-300 [&>span]:line-clamp-none [&>span]:truncate"
       >
         <SelectValue placeholder="Сортировка" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Сортировка по</SelectLabel>
+          <SelectLabel>{t('title')}</SelectLabel>
           {SORT_OPTIONS.map((option) => (
-            <SelectItem key={option.value} value={option.value.toString()}>
-              {option.label}
+            <SelectItem key={option} value={option.toString()}>
+              {t(`options.${option}`)}
             </SelectItem>
           ))}
         </SelectGroup>
       </SelectContent>
     </Select>
   )
-}
-
-const renderTextByCategory: Record<
-  string,
-  Record<'title' | 'subtitle', string>
-> = {
-  finished: {
-    title: 'Готовые',
-    subtitle: 'Гарантия на все ноутбуки с Витрины - 1 месяц.'
-  },
-  unfinished: {
-    title: 'Не готовые ноутбуки',
-    subtitle: "Гарантия на 'Не готовые' ноутбуки не предоставляется."
-  }
 }

@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
-import ShowcaseCategoryPage from '../../../libs/components/views/Showcase/showcase-category.page'
-import { Breadcrumbs } from '../../../libs/components/shared/ui/breadcrumbs'
-import { Loading } from '../../../libs/components/shared/styled/loading'
+import ShowcaseCategoryPage from '../../../../libs/components/views/Showcase/showcase-category.page'
+import { Breadcrumbs } from '../../../../libs/components/shared/ui/breadcrumbs'
+import { Loading } from '../../../../libs/components/shared/styled/loading'
 
 export default async function Page({
   searchParams

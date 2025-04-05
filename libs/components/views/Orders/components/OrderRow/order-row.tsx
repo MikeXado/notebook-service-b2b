@@ -13,6 +13,7 @@ import {
   TableHeader,
   TableRow
 } from '../../../../shared/ui/table'
+import { useTranslations } from 'next-intl'
 
 const formatPrice = (price: number) => {
   if (!price) return 0
@@ -22,6 +23,7 @@ const formatPrice = (price: number) => {
 
 export function OrderRow({ order }: { order: Order }) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const t = useTranslations('orders')
 
   return (
     <div
@@ -31,23 +33,23 @@ export function OrderRow({ order }: { order: Order }) {
       )}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-5">
-        <RowItem className="lg:col-span-2" title="Номер заказа">
+        <RowItem className="lg:col-span-2" title={t('order_number')}>
           <p className="text-primary">№ {order.order_id}</p>
         </RowItem>
 
-        <RowItem className="lg:col-span-2" title="Статус заказа">
+        <RowItem className="lg:col-span-2" title={t('order_status')}>
           <OrderStatus status={order.status} />
         </RowItem>
 
-        <RowItem className="lg:col-span-2" title="Дата заказа">
+        <RowItem className="lg:col-span-2" title={t('order_date')}>
           <p>{order.order_date}</p>
         </RowItem>
 
-        <RowItem title="Кол-во">
+        <RowItem title={t('order_length')}>
           <p>{order.items.length}</p>
         </RowItem>
 
-        <RowItem title="Сумма">
+        <RowItem title={t('order_price')}>
           <p>{formatPrice(order.order_sum)}</p>
         </RowItem>
       </div>
@@ -72,15 +74,16 @@ export function OrderRow({ order }: { order: Order }) {
 }
 
 function OrderItemsTable({ orderItems }: { orderItems: OrderItem[] }) {
+  const t = useTranslations('orders')
   return (
     <Table className="w-full">
       <TableHeader>
         <TableRow className="text-xs whitespace-nowrap text-secondary-foreground">
-          <TableHead className="font-normal">Артикул</TableHead>
-          <TableHead className="font-normal">Наименование</TableHead>
-          <TableHead className="font-normal">Кол-во</TableHead>
-          <TableHead className="font-normal">Цена</TableHead>
-          <TableHead className="font-normal">Сумма</TableHead>
+          <TableHead className="font-normal">{t('article')}</TableHead>
+          <TableHead className="font-normal">{t('name')}</TableHead>
+          <TableHead className="font-normal">{t('length')}</TableHead>
+          <TableHead className="font-normal">{t('price')}</TableHead>
+          <TableHead className="font-normal">{t('total_price')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

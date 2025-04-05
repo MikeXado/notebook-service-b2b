@@ -6,6 +6,7 @@ import { getSumCounts } from '../service'
 import { placeOrder } from '../action'
 import { toast } from '../../../shared/ui/use-toast'
 import { Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 export function MainCart({
   rate,
   currencyName,
@@ -23,6 +24,7 @@ export function MainCart({
     lotsCart,
     userDiscountPercent || 0
   )
+  const t = useTranslations('cart')
   const currentSumInUAH = Math.floor((currentSum || 0) * rate)
   const sumDiffInUAH = Math.floor((sumDiff || 0) * rate)
   const isLotsCartEmpty = !lotsCart?.length
@@ -44,7 +46,7 @@ export function MainCart({
         }
       } catch {
         toast({
-          title: 'Unknown error occured, please try again later.',
+          title: t('unknown_error'),
           variant: 'destructive'
         })
       }
@@ -68,30 +70,40 @@ export function MainCart({
       </div>
 
       <div className="lg:col-span-1 bg-white p-3 rounded-lg shadow flex flex-col gap-5">
-        <p className="font-medium">Итого</p>
+        <p className="font-medium">{t('total')}</p>
 
         <div className="flex flex-col gap-2">
           <p className="flex items-center justify-between">
-            Товаров - {cart.length + lotsCart.length}, на сумму:{' '}
-            <span className="font-medium">
-              {currentSum} ({currentSumInUAH} UAH)
-            </span>
+            {t.rich('total_items', {
+              length: cart.length + lotsCart.length,
+              price: () => (
+                <span className="font-medium">
+                  {currentSum} ({currentSumInUAH} UAH)
+                </span>
+              )
+            })}
           </p>
 
           {discountTotal || 0 > 0 ? (
             <p className="flex items-center justify-between">
-              Скидка:{' '}
-              <span className="font-medium">
-                {discountTotal} ({userDiscountPercent || 0}%)
-              </span>
+              {t.rich('discount', {
+                discount: () => (
+                  <span className="font-medium">
+                    {discountTotal} ({userDiscountPercent || 0}%)
+                  </span>
+                )
+              })}
             </p>
           ) : null}
 
           <p className="flex items-center justify-between">
-            Итог:{' '}
-            <span className="font-medium">
-              {sumDiff} ({sumDiffInUAH} UAH)
-            </span>
+            {t.rich('total_price', {
+              price: () => (
+                <span className="font-medium">
+                  {sumDiff} ({sumDiffInUAH} UAH)
+                </span>
+              )
+            })}
           </p>
         </div>
         <button
@@ -99,7 +111,7 @@ export function MainCart({
           onClick={doOrder}
           className="bg-primary border border-primary text-white flex items-center justify-center rounded-lg py-3 px-2 font-medium hover:bg-none transition-colors duration-300"
         >
-          {isPending ? <Loader2 className="animate-spin" /> : 'Оформить заказ'}
+          {isPending ? <Loader2 className="animate-spin" /> : t('submit')}
         </button>
       </div>
     </div>

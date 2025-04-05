@@ -3,9 +3,11 @@ import React, { useTransition } from 'react'
 import { getLotExcel } from '../action'
 import { toast } from '../../../shared/ui/use-toast'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export default function GetLotExcel() {
   const [isPending, startTransition] = useTransition()
+  const t = useTranslations('showcase.export')
   function handleExportExcel() {
     startTransition(async () => {
       try {
@@ -18,7 +20,7 @@ export default function GetLotExcel() {
         document.body.removeChild(link)
       } catch {
         toast({
-          title: 'Ошибка экспорта в Excel',
+          title: t('error'),
           variant: 'destructive'
         })
       }
@@ -37,7 +39,7 @@ export default function GetLotExcel() {
         height={18}
         alt="excel"
       />
-      <span>Выгрузка Excel</span>
+      <span>{t('title')}</span>
     </button>
   )
 }

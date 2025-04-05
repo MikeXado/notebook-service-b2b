@@ -22,7 +22,7 @@ export function NotebookImage({
   return (
     <div
       className={cn(
-        'w-24 h-24 p-1 relative flex flex-shrink-0 items-center justify-center rounded-lg border group transition-all duration-300',
+        'w-24 h-24 p-1 relative flex flex-shrink-0 items-center justify-center rounded-lg  group transition-all duration-300',
         className || ''
       )}
     >

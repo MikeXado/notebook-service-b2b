@@ -10,6 +10,7 @@ import DisplayCondition from './dispaly-condition'
 import NotebookSlider from './slider/notebook-slider'
 import { NotebookPowerOn } from './notebook-poweron'
 import NotebookLookout from './notebook-lookout'
+import { useTranslations } from 'next-intl'
 
 export function NotebookRow({
   notebook,
@@ -25,6 +26,8 @@ export function NotebookRow({
     isUserActive: !!userActive
   })
 
+  const t = useTranslations('showcase.items')
+
   return (
     <div
       className={cn(
@@ -36,7 +39,7 @@ export function NotebookRow({
     >
       {notebook.is_new === 1 && (
         <div className="text-white text-xs bg-[#ffac30] absolute left-3 z-20 top-3 px-1">
-          Новинка
+          {t('new')}
         </div>
       )}
 
@@ -50,6 +53,11 @@ export function NotebookRow({
       <RowItem title={notebook.mark_name}>
         <p>{notebook.item_name}</p>
         <p className="text-primary text-sm">{notebook.serial_num}</p>
+        <p className="text-sm text-muted-foreground bg-gray-200 px-2 rounded-sm">
+          {t('store', {
+            store_code: notebook.store_code
+          })}
+        </p>
       </RowItem>
 
       <RowItem
@@ -57,7 +65,7 @@ export function NotebookRow({
           notebook.poweron ? (
             <NotebookPowerOn powerOn={notebook.poweron} />
           ) : (
-            'Вн. вид'
+            t('poweron.title')
           )
         }
       >
@@ -69,7 +77,7 @@ export function NotebookRow({
           notebook.display_cond ? (
             <DisplayCondition condition={notebook.display_cond} />
           ) : (
-            'Экран'
+            t('screen.title')
           )
         }
       >
@@ -92,11 +100,11 @@ export function NotebookRow({
         <p>{notebook.hdd || <Minus />}</p>
       </RowItem>
 
-      <RowItem title="Батарея">
+      <RowItem title={t('battery')}>
         <p>{notebook.battery}</p>
       </RowItem>
 
-      <RowItem title="Цена">
+      <RowItem title={t('price')}>
         {isUserHasPermission ? (
           <div className="flex items-center gap-1">
             <p className="text-[#ce4035] font-medium text-lg shrink-0">
@@ -107,10 +115,7 @@ export function NotebookRow({
             </del>
           </div>
         ) : (
-          <p
-            className="blur-sm"
-            title="Менеджер должен подтвердить ваши данные"
-          >
+          <p className="blur-sm" title={t('not_active')}>
             Not active
           </p>
         )}
